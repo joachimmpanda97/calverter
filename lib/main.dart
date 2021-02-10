@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'buttons.dart';
-import 'symbols.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,10 +25,13 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+var question = '';
+var answer = '';
+
 final List<dynamic> buttons = [
   'R',
-  'AC',
-  '％',
+  '\$',
+  '%',
   '÷',
   '7',
   '8',
@@ -36,29 +40,59 @@ final List<dynamic> buttons = [
   '4',
   '5',
   '6',
-  '―',
+  '-',
   '1',
   '2',
   '3',
   '+',
-  '23',
+  '⌫',
   '0',
   '.',
   '=',
 ];
 
 class _MyHomePageState extends State<MyHomePage> {
+  static const bgColor = const Color(0xFF22252E);
+  static const typeArea = const Color(0xFF292D36);
+  static const bgBtn = const Color(0xFF272B34);
+  static const operatorColor = const Color(0xFFD06D70);
+  static const topItemColor = const Color(0xFF45EAC7);
+
   Widget build(BuildContext context) {
-    const bgColor = const Color(0xFF22252E);
-    const typeArea = const Color(0xFF292D36);
-    const bgBtn = const Color(0xFF272B34);
-    const operatorColor = const Color(0xFFD06D70);
-    const topItemColor = const Color(0xFF45EAC7);
     return Scaffold(
       backgroundColor: bgColor,
       body: Column(
         children: [
-          Expanded(child: Container()),
+          Expanded(
+              child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: Container(
+                    alignment: Alignment.bottomRight,
+                    child: Text(question,
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 35,
+                        )),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 15, 0),
+                  child: Container(
+                    alignment: Alignment.bottomRight,
+                    child: Text(answer,
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 35,
+                        )),
+                  ),
+                ),
+              ],
+            ),
+          )),
           Expanded(
             flex: 2,
             child: Container(
@@ -82,9 +116,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (index == 1) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Symbol(
-                          url: 'lib/assets/conv.png',
-                          colorbg: bgBtn,
+                        child: CalButtons(
+                          show: () {
+                            setState(() {
+                              question += buttons[index];
+                            });
+                          },
+                          buttonText: buttons[index],
+                          textColor: topItemColor,
+                          color: bgBtn,
+                          size: 30,
                         ),
                       );
                     }
@@ -93,9 +134,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (index == 11) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Symbol(
-                          url: 'lib/assets/subs.png',
-                          colorbg: bgBtn,
+                        child: CalButtons(
+                          show: () {
+                            setState(() {
+                              question += buttons[index];
+                            });
+                          },
+                          buttonText: buttons[index],
+                          textColor: operatorColor,
+                          color: bgBtn,
+                          size: 40,
                         ),
                       );
                     }
@@ -104,9 +152,23 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (index == 16) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Symbol(
-                          url: 'lib/assets/back.png',
-                          colorbg: bgBtn,
+                        child: CalButtons(
+                          buttonText: buttons[index],
+                          textColor: topItemColor,
+                          color: bgBtn,
+                          size: 25,
+                          show: () {
+                            setState(() {
+                              question =
+                                  question.substring(0, question.length - 1);
+                            });
+                          },
+                          clear: () {
+                            setState(() {
+                              question = '';
+                              answer = '';
+                            });
+                          },
                         ),
                       );
                     }
@@ -115,9 +177,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (index == 2) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Symbol(
-                          url: 'lib/assets/perc.png',
-                          colorbg: bgBtn,
+                        child: CalButtons(
+                          show: () {
+                            setState(() {
+                              question += buttons[index];
+                            });
+                          },
+                          buttonText: buttons[index],
+                          textColor: topItemColor,
+                          color: bgBtn,
+                          size: 30,
                         ),
                       );
                     }
@@ -126,9 +195,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (index == 3) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Symbol(
-                          url: 'lib/assets/divide.png',
-                          colorbg: bgBtn,
+                        child: CalButtons(
+                          show: () {
+                            setState(() {
+                              question += buttons[index];
+                            });
+                          },
+                          buttonText: buttons[index],
+                          textColor: operatorColor,
+                          color: bgBtn,
+                          size: 40,
                         ),
                       );
                     }
@@ -137,9 +213,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (index == 7) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Symbol(
-                          url: 'lib/assets/mult.png',
-                          colorbg: bgBtn,
+                        child: CalButtons(
+                          show: () {
+                            setState(() {
+                              question += buttons[index];
+                            });
+                          },
+                          buttonText: buttons[index],
+                          textColor: operatorColor,
+                          color: bgBtn,
+                          size: 40,
                         ),
                       );
                     }
@@ -148,9 +231,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (index == 15) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Symbol(
-                          url: 'lib/assets/add.png',
-                          colorbg: bgBtn,
+                        child: CalButtons(
+                          show: () {
+                            setState(() {
+                              question += buttons[index];
+                            });
+                          },
+                          buttonText: buttons[index],
+                          textColor: operatorColor,
+                          color: bgBtn,
+                          size: 40,
                         ),
                       );
                     }
@@ -159,16 +249,28 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (index == 19) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Symbol(
-                          url: 'lib/assets/ans.png',
-                          colorbg: bgBtn,
+                        child: CalButtons(
+                          show: () {
+                            setState(() {
+                              equals();
+                            });
+                          },
+                          buttonText: buttons[index],
+                          textColor: operatorColor,
+                          color: bgBtn,
+                          size: 40,
                         ),
                       );
                     }
-                    // The rest Buttons
+                    // The rest of Buttons
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CalButtons(
+                        show: () {
+                          setState(() {
+                            question += buttons[index];
+                          });
+                        },
                         buttonText: buttons[index],
                         color: bgBtn,
                         textColor: isOperator(buttons[index])
@@ -189,8 +291,23 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 bool isOperator(String x) {
-  if (x == "＋" || x == "×" || x == "―" || x == "+" || x == "=") {
+  if (x == "＋" || x == "×" || x == "-" || x == "+" || x == "=") {
     return true;
   }
   return false;
+}
+
+void equals() {
+  String finalQuestion = question;
+
+  finalQuestion = finalQuestion.replaceAll('×', '*');
+  finalQuestion = finalQuestion.replaceAll('÷', '/');
+  finalQuestion = finalQuestion.replaceAll('%', '*0.01');
+
+  Parser p = Parser();
+  Expression exp = p.parse(finalQuestion);
+  ContextModel cm = ContextModel();
+  double eval = exp.evaluate(EvaluationType.REAL, cm);
+
+  answer = eval.toString();
 }
